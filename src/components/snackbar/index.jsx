@@ -18,12 +18,12 @@ export default function CustomizedSnackbars({open ,toggle}) {
   return (
     <div>
      
-      <Snackbar open={open} autoHideDuration={4000} onClose={toggle}>
+      <Snackbar open={open} autoHideDuration={3000} onClose={toggle}>
         <Alert
           onClose={toggle}
           severity="success"
           variant="filled"
-          sx={{ width: '100%' }}
+          sx={{width: '100%' }}
         >
           This is a success Alert inside a Snackbar!
         </Alert>

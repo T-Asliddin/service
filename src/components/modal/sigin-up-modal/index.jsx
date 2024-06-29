@@ -9,6 +9,7 @@ import { useSpring, animated } from "@react-spring/web";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { auth } from "@service";
+import { Snackbar } from "../..";
 const Fade = React.forwardRef(function Fade(props, ref) {
   const {
     children,
@@ -64,10 +65,13 @@ const style = {
 
 export default function Index(props) {
   const [code, setCode] = React.useState("");
+   const [notopen, setNotopen] = React.useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     const payload = {
       code: code,
       email: localStorage.getItem("email"),
@@ -76,13 +80,21 @@ export default function Index(props) {
       const response = await auth.verify_code(payload);
       if (response.status === 201) {
         props.toggle();
-        navigate("/");
+        setNotopen(true)
+        setTimeout(()=>{
+          navigate("/");
+        },2000)
+        
       }
     } catch (error) {}
   };
+  const toggle=()=>{
+    setNotopen(false)
+  }
 
   return (
     <div>
+      <Snackbar  open={notopen} toggle={toggle}/> 
       <Modal
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
@@ -96,7 +108,7 @@ export default function Index(props) {
           },
         }}
       >
-        <Fade in={open}>
+        <Fade in={props.open}>
           <Box sx={style}>
             <Typography
               id="spring-modal-title"
@@ -107,7 +119,7 @@ export default function Index(props) {
               Enter Code
             </Typography>
             <Typography id="spring-modal-description" sx={{ mt: 2 }}>
-              <form onClick={handleSubmit} className="flex flex-col gap-5">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <TextField
                   fullWidth
                   type="text"

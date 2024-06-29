@@ -2,10 +2,12 @@ import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import { auth } from "@service";
-import { SignUPModal } from "../../components";
+import { SignUPModal } from "../../components/modal";
+import { Snackbar } from "../../components";
 const Index = () => {
   const [form, setForm] = useState({});
   const [open, setOpen] = useState(false);
+
 
   const hendleChange = (e) => {
     const { name, value } = e.target;
@@ -14,12 +16,14 @@ const Index = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
+    // 0d205b50-bbe0-49d6-bbef-55d95867e2be
     try {
       const response = await auth.sign_up(form);
       if (response.status === 200) {
-        setOpen(true);
         localStorage.setItem("email", form.email);
+        console.log(response);
+        setOpen(true);
       }
     } catch (error) {}
   };
