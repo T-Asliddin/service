@@ -36,7 +36,7 @@ const Index = () => {
     }
   };
   const toggle = () => {
-    setOpen(false);
+    setModal(false);
   };
   return (
     <>
