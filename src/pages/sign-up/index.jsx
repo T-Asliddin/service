@@ -22,7 +22,6 @@ const Index = () => {
       const response = await auth.sign_up(form);
       if (response.status === 200) {
         localStorage.setItem("email", form.email);
-        console.log(response);
         setOpen(true);
       }
     } catch (error) {}

@@ -1,9 +1,45 @@
-import React from 'react'
+import TextField from "@mui/material/TextField";
+import { useState, useEffect } from "react";
+import Button from "@mui/material/Button";
+import { auth } from "@service";
+import { NavLink } from "react-router-dom";
+import { CreateModal } from "@modal";
+import { ServiceTable } from "@ui";
+import { service } from "@service";
 
 const Index = () => {
-  return (
-    <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis quae saepe earum accusantium, dolor fugiat adipisci mollitia natus recusandae quibusdam. Quibusdam possimus ipsa architecto doloremque, maxime commodi labore. Placeat, animi rem. Unde, quidem dignissimos. Quo pariatur ea omnis rerum veniam reiciendis delectus quibusdam porro quia, sunt accusamus, magnam exercitationem assumenda nostrum laudantium. Repellat quia amet rerum labore architecto saepe pariatur dolorem cumque laudantium ipsa ex dolore facilis obcaecati, inventore ipsum ut corporis nostrum doloribus doloremque quidem veniam blanditiis assumenda nam veritatis! Dicta qui molestiae, pariatur voluptatem, placeat id eaque illum maiores natus libero aliquid. Id minima facere vel! Porro illo saepe iste soluta quis quos, tempore pariatur dolorum, voluptates ipsum iusto optio culpa reprehenderit, expedita error natus facilis voluptate corporis dignissimos excepturi corrupti ut eveniet. Ipsum, dolorum eius odio hic, recusandae numquam sunt repellat officiis quam ea quidem reprehenderit quas consequatur ut corporis quaerat, quisquam iste! Doloremque dicta doloribus quaerat est quidem sequi sit perferendis officiis! Unde repellendus libero veniam itaque, facilis alias? Nam ratione alias saepe ipsa, laudantium repellat facilis illum numquam perferendis accusamus, vero consequatur amet enim eaque atque recusandae ipsum corporis cupiditate. Id explicabo, illo architecto alias inventore adipisci corrupti expedita saepe facilis eligendi laudantium vero ut?</div>
-  )
-}
+  const [open, setOpen] = useState(false);
+  const [data ,setData]=useState([])
 
-export default Index
+  const getdata = async () => {
+    try {
+      const response = await service.get();
+      if (response.status===200 && response.data.services) {
+        setData(response.data.services)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }; 
+
+  useEffect(() => {
+    getdata();
+  }, []);
+
+  return (
+    <>
+      <CreateModal open={open} toggle={() => setOpen(false)} />
+
+      <div className="flex flex-col gap-5">
+        <div className=" flex justify-end ">
+          <Button onClick={() => setOpen(true)} variant="contained">
+            Add
+          </Button>
+        </div>
+        <ServiceTable data={data} />
+      </div>
+    </>
+  );
+};
+
+export default Index;

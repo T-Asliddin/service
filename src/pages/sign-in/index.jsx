@@ -19,11 +19,11 @@ const Index = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
+    setOpen(true);
     try {
       const response = await auth.sign_in(form);
-      console.log(response);
       if (response.status === 200) {
+         localStorage.setItem("access_token" , response?.data?.access_token)
         setOpen(true);
         setTimeout(()=>{
           navigate("drawer")

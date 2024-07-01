@@ -5,6 +5,7 @@ const auth = {
     verify_code: (data)=> http.post("/auth/verify", data),
     verify_forgot_password: (data)=>http.post("/auth/verify-forgot-password",data),
     forgot_password: (data)=>http.post("/auth/forgot-password",data),
+    
 
 }
 export default auth
