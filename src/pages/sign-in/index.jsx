@@ -10,6 +10,7 @@ const Index = () => {
   const [form, setForm] = useState({});
   const [open, setOpen] = useState(false);
   const [modal, setModal] = useState(false);
+  const [severity,setSeverity]=useState("")
   const navigate =useNavigate()
 
   const hendleChange = (e) => {
@@ -19,17 +20,21 @@ const Index = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setOpen(true);
     try {
       const response = await auth.sign_in(form);
+      console.log(response);
       if (response.status === 200) {
          localStorage.setItem("access_token" , response?.data?.access_token)
-        setOpen(true);
+         setSeverity("success")
+         setOpen(true);
         setTimeout(()=>{
           navigate("drawer")
         } ,2000)
       }
-    } catch (error) {}
+    } catch (error) {
+      setSeverity("error")
+      setOpen(true)
+    }
   };
 
   const toggle = () => {
@@ -42,7 +47,7 @@ const Index = () => {
 
   return (
     <>
-      <Snackbar open={open} toggle={toggle} />
+      <Snackbar open={open} toggle={toggle} severity={severity} />
       <ForgotModal modal={modal} forgot={forgot} />
       <div className="w-full h-screen flex items-center justify-center">
         <div className="w-[600px]  p-5">

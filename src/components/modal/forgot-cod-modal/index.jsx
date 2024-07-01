@@ -23,6 +23,8 @@ const style = {
 export default function BasicModal({ openn, togglee }) {
   const [form, setForm] = useState({});
   const [open , setOpen]=useState(false)
+  const [severity,setSeverity]=useState("")
+
   const Heandlchange=(e)=>{
     const {name , value} = e.target
     setForm({...form , [name]:value})
@@ -35,21 +37,24 @@ const handleSubmit = async (e) => {
         email:localStorage.getItem("email"),
         new_password:form.password
     }
-    console.log(payload);
     try {
       const response = await auth.verify_forgot_password(payload);
       if (response.status==201) {
+        setSeverity("success")
         setOpen(true)
         togglee()
       }
-    } catch (error) {} 
+    } catch (error) {
+      setSeverity("error")
+      setOpen(true)
+    } 
   };
   const toggle=()=>{
     setOpen(false)
   }
   return (
     <div>
-      <Snackbar open={open} toggle={toggle} />
+      <Snackbar open={open} toggle={toggle} severity={severity} />
       <Modal
         open={openn}
         onClose={togglee}

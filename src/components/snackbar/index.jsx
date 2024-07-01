@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
-export default function CustomizedSnackbars({open ,toggle}) {
+export default function CustomizedSnackbars({open ,toggle ,severity}) {
 
   
 
@@ -21,7 +21,7 @@ export default function CustomizedSnackbars({open ,toggle}) {
       <Snackbar open={open} autoHideDuration={3000} onClose={toggle}>
         <Alert
           onClose={toggle}  
-          severity="error"
+          severity={severity}
           variant="filled"
           sx={{width: '100%' }}
           anchorOrigin={{vertical:'top' , horizontal:'center'}}

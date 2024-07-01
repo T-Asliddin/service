@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import { useSpring, animated } from "@react-spring/web";
 import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
+import { useState } from "react";
 import { auth } from "@service";
 import { Snackbar } from "../..";
 const Fade = React.forwardRef(function Fade(props, ref) {
@@ -65,13 +66,13 @@ const style = {
 
 export default function Index(props) {
   const [code, setCode] = React.useState("");
-   const [notopen, setNotopen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [severity,setSeverity]=useState("")
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     const payload = {
       code: code,
       email: localStorage.getItem("email"),
@@ -80,21 +81,26 @@ export default function Index(props) {
       const response = await auth.verify_code(payload);
       if (response.status === 201) {
         props.toggle();
-        setNotopen(true)
-        setTimeout(()=>{
+        setSeverity("success")
+        setOpen(true);
+        setTimeout(() => {
           navigate("/");
-        },2000)
-        
+        }, 2000);
       }
-    } catch (error) {}
+    } catch (error) {
+      setSeverity("error")
+      setOpen(true)
+    }
   };
-  const toggle=()=>{
-    setNotopen(false)
-  }
+  const toggle = () => {
+    setOpen(false);
+  };
+
 
   return (
     <div>
-      <Snackbar  open={notopen} toggle={toggle}/> 
+            <Snackbar open={open} toggle={toggle} severity={severity} />
+
       <Modal
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
