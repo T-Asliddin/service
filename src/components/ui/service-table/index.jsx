@@ -33,6 +33,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function CustomizedTables({ data }) {
   const [open, setOpen] = useState(false);
+  const [item ,setItem] =useState()
 
   const daletItem = async (id) => {
     try {
@@ -44,12 +45,13 @@ export default function CustomizedTables({ data }) {
   };
 
   const editItem = (item) => {
-    setOpen(true)
+    setOpen(true);
+    setItem(item)
   };
 
   return (
     <>
-      <CreateModal open={open} toggle={() => setOpen(false)} />
+      <CreateModal open={open} toggle={() => setOpen(false)}  item={item}/>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>

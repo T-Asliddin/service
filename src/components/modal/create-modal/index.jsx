@@ -20,27 +20,44 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal({ open, toggle }) {
+export default function BasicModal({ open, toggle ,item}) {
   const [form, setForm] = useState({});
- 
 const heandleChange = (e) => {
   const { name, value } = e.target;
   setForm({ ...form, [name]: value });
 };
+
 const handleSubmit = async (e) => {
   e.preventDefault();
   const payload = {
     name: form.name,
     price: +form.price,
   };
-
-  try {
-    const response = await service.create_service(payload);
-    if (response.status===201) {
-      toggle()
-      window.location.reload()
-    }
-  } catch (error) {}
+ 
+  if (item) {
+    const edit ={
+    id:item.id,
+    name: form.name,
+    price: +form.price,
+   }
+   console.log(edit);
+    try {
+      const response = await service.update(edit);
+      if (response.status===200) {
+        console.log(response);
+        toggle()
+          window.location.reload()
+      }
+    } catch (error) {}
+  }else{
+    try {
+      const response = await service.create_service(payload);
+      if (response.status===201) {
+        toggle()
+        window.location.reload()
+      }
+    } catch (error) {}
+  }
 };
   return (
     <div>
