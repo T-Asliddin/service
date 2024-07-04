@@ -11,7 +11,6 @@ import { useState } from "react";
 import { service } from "@service";
 import { CreateModal } from "@modal";
 
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "rgba(35,137,218,1)",
@@ -34,8 +33,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function CustomizedTables({ data }) {
   const [open, setOpen] = useState(false);
-  const [item ,setItem] =useState()
-console.log(data);
+  const [item, setItem] = useState();
+  console.log(data);
   const daletItem = async (id) => {
     try {
       const response = await service.delete(id);
@@ -47,19 +46,22 @@ console.log(data);
 
   const editItem = (item) => {
     setOpen(true);
-    setItem(item)
+    setItem(item);
   };
 
   return (
     <>
-      <CreateModal open={open} toggle={() => setOpen(false)}  item={item}/>
+      <CreateModal open={open} toggle={() => setOpen(false)} item={item} />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell align="center">T/R</StyledTableCell>
-              <StyledTableCell align="center">Cervice Name</StyledTableCell>
-              <StyledTableCell align="center">Cervice Price</StyledTableCell>
+              <StyledTableCell align="center">Client Name</StyledTableCell>
+              <StyledTableCell align="center">Servise Name</StyledTableCell>
+              <StyledTableCell align="center">Price</StyledTableCell>
+              <StyledTableCell align="center">Amout</StyledTableCell>
+              <StyledTableCell align="center">Phone</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -67,8 +69,17 @@ console.log(data);
             {data.map((item, index) => (
               <StyledTableRow key={index}>
                 <StyledTableCell align="center">{index + 1}</StyledTableCell>
-                <StyledTableCell align="center">{item.name}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {item.client_name}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {item.service_name}
+                </StyledTableCell>
                 <StyledTableCell align="center">{item.price}</StyledTableCell>
+                <StyledTableCell align="center">{item.amount}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {item.client_phone_number}
+                </StyledTableCell>
                 <StyledTableCell align="center">
                   <div>
                     <button

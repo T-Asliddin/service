@@ -18,10 +18,11 @@ const Index = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+   
     // 0d205b50-bbe0-49d6-bbef-55d95867e2be
     try {
       const response = await auth.sign_up(form);
+      
       if (response.status === 200) {
         localStorage.setItem("email", form.email);
         setSeverity("success")
@@ -35,13 +36,16 @@ const Index = () => {
       setOpen(true)
     }
   };
-  const toggle = () => {
+  const togglee = () => {
     setModal(false);
+  };
+  const toggle = () => {
+    setOpen(false);
   };
   return (
     <>
       <Snackbar open={open} toggle={toggle} severity={severity} />
-      <SignUPModal open={modal} toggle={toggle} />
+      <SignUPModal open={modal} toggle={togglee} />
       <div className="w-full h-screen flex items-center justify-center">
         <div className="w-[600px]  p-5">
           <h1 className="text-[50px] my-3 text-center ">Register</h1>

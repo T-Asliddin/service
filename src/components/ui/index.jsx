@@ -1,2 +1,3 @@
 import ServiceTable from "./service-table"
-export {ServiceTable}
+import OrderTable from "./order-table"
+export {ServiceTable ,OrderTable}

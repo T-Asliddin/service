@@ -37,10 +37,8 @@ const handleSubmit = async (e) => {
   if (item) {
     const edit ={
     id:item.id,
-    name: form.name,
-    price: +form.price,
+    ...form
    }
-   console.log(edit);
     try {
       const response = await service.update(edit);
       if (response.status===200) {

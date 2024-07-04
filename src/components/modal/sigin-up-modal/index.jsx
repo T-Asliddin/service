@@ -77,6 +77,7 @@ export default function Index(props) {
       code: code,
       email: localStorage.getItem("email"),
     };
+    console.log(payload);
     try {
       const response = await auth.verify_code(payload);
       if (response.status === 201) {

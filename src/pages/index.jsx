@@ -1,6 +1,6 @@
 import SignUp from './sign-up'
 import SignIn from './sign-in'
 import Asosiy from './asosiy';
-import Buyurtmalar from './buyurtmalr'
+import Order from './order'
 import Servise from './servise'
-export { SignUp, SignIn ,Asosiy ,Buyurtmalar , Servise}
+export { SignUp, SignIn ,Asosiy ,Order , Servise}
