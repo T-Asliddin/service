@@ -37,6 +37,7 @@ export default function CustomizedTables({ data }) {
   const [item, setItem] = useState();
   const [modal ,setModal]=useState(false)
   const [edit , setEdit] =useState(false)
+  console.log(data);
 
   const daletItem = async (id) => {
     try {
@@ -71,6 +72,7 @@ export default function CustomizedTables({ data }) {
               <StyledTableCell align="center">Price</StyledTableCell>
               <StyledTableCell align="center">Amout</StyledTableCell>
               <StyledTableCell align="center">Phone</StyledTableCell>
+              <StyledTableCell align="center">Status</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -89,6 +91,10 @@ export default function CustomizedTables({ data }) {
                 <StyledTableCell align="center">
                   {item.client_phone_number}
                 </StyledTableCell>
+                <StyledTableCell align="center">
+                  {item.status}
+                </StyledTableCell>
+                
                 <StyledTableCell align="center">
                   <div>
                     <button
