@@ -1,7 +1,7 @@
 import  SignUPModal  from "./sigin-up-modal";
 import ForgotModal from "./forgot-modal"
 import ForgotCodModal from "./forgot-cod-modal"
-import CreateModal from "./create-modal"
+import CreateModal from "./service-modal"
 import OrderModal from "./order-modal"
 
 export {SignUPModal ,ForgotModal ,ForgotCodModal ,CreateModal ,OrderModal}

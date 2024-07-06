@@ -8,8 +8,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
-import { service } from "@service";
-import { CreateModal } from "@modal";
+import { OrderModal } from "@modal";
+import { order } from "@service";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,10 +34,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function CustomizedTables({ data }) {
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState();
-  console.log(data);
+  const [modal ,setModal]=useState(false)
+
   const daletItem = async (id) => {
     try {
-      const response = await service.delete(id);
+      const response = await order.delete(id);
       response.status === 200 && window.location.reload();
     } catch (error) {
       console.log(error);
@@ -45,13 +46,19 @@ export default function CustomizedTables({ data }) {
   };
 
   const editItem = (item) => {
-    setOpen(true);
-    setItem(item);
+    setModal(true);
+     setItem(item);
   };
 
   return (
     <>
-      <CreateModal open={open} toggle={() => setOpen(false)} item={item} />
+      <OrderModal
+      item={item}
+        modal={modal}
+        close={() => {
+          setModal(false);
+        }}
+      />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>

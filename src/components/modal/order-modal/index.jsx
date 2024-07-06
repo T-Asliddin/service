@@ -21,10 +21,10 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal({ modal, close }) {
+export default function BasicModal({ modal, close, item }) {
   const [form, setForm] = useState();
-  const [open , setOpen]=useState(false)
-  const [severity,setSeverity]=useState("")
+  const [open, setOpen] = useState(false);
+  const [severity, setSeverity] = useState("");
   const [data, setData] = useState([]);
   const getdata = async () => {
     try {
@@ -43,36 +43,53 @@ export default function BasicModal({ modal, close }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value })
-   
-    
+    setForm({ ...form, [name]: value });
   };
   const handleSubmit = async (e) => {
-      e.preventDefault();
-      const payload={
-          amount:+form.amount,
-          client_full_name:form.name,
-          client_phone_number:form.number,
-          service_id:form.id
-      }
-      console.log(payload);
-      try{
-        const response =await order.create_order(payload)
-        console.log(response);
-        if (response.status==201) {
-          setSeverity("success")
-          setOpen(true)
-          close()
+    e.preventDefault();
+    const payload = {
+      amount: +form.amount,
+      client_full_name: form.name,
+      client_phone_number: form.number,
+      service_id: form.id,
+    };
+    if (item) {
+      const {amount ,client_id ,id ,service_id ,status }=item
+      // console.log(amount,client_id, id ,service_id ,status);
+      const edit = {
+        amount:+form.amount,
+        client_id,
+        id,
+        service_id,
+        status
+      };
+      try {
+        const response = await order.update(edit);
+        if (response.status === 200) {
+          console.log(response);
+          toggle();
+          window.location.reload();
         }
-      }catch(error){
-        setSeverity("error")
-        setOpen(true)
+      } catch (error) {}
+    } else {
+      try {
+        const response = await order.create_order(payload);
+        console.log(response);
+        if (response.status == 201) {
+          setSeverity("success");
+          setOpen(true);
+          close();
+          window.location.reload();
+        }
+      } catch (error) {
+        setSeverity("error");
+        setOpen(true);
       }
-  
-     };
-    const toggle=()=>{
-      setOpen(false)
     }
+  };
+  const toggle = () => {
+    setOpen(false);
+  };
   return (
     <div>
       <Snackbar open={open} toggle={toggle} severity={severity} />
@@ -92,7 +109,7 @@ export default function BasicModal({ modal, close }) {
             Order create
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <form  onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
               <TextField
                 fullWidth
                 type="number"
@@ -141,7 +158,6 @@ export default function BasicModal({ modal, close }) {
                 fullWidth
                 className=" mt-3"
                 variant="contained"
-               
               >
                 Submit
               </Button>
