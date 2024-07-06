@@ -85,7 +85,7 @@ console.log(data);
                       }}
                       className="bg-red-500 hover:bg-red-700 text-white py-2 px-5 rounded "
                     >
-                      Dalet
+                      Delet
                     </button>
                   </div>
                 </StyledTableCell>

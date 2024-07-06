@@ -28,7 +28,7 @@ const Index = () => {
     <OrderModal data={data}/>
       <CreateModal open={open} toggle={() => setOpen(false)} />
 
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-3">
         <div className=" flex justify-end ">
           <Button onClick={() => setOpen(true)} variant="contained">
             Add

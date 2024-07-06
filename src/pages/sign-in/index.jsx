@@ -29,7 +29,7 @@ const Index = () => {
          setOpen(true);
         setTimeout(()=>{
           navigate("drawer")
-        } ,2000)
+        } ,1500)
       }
     } catch (error) {
       setSeverity("error")

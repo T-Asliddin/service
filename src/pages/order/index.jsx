@@ -24,14 +24,15 @@ const [data ,setData]=useState([])
   return (
     <>
       <OrderModal modal={modal} close={()=>{setModal(false)}} />
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-3">
         <div className=" flex justify-end ">
           <Button onClick={()=>{setModal(true)}} variant="contained">
             Add
           </Button>
         </div>
-      </div>
+     
       <OrderTable data={data}/>
+      </div>
     </>
   );
 };
