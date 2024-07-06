@@ -53,38 +53,18 @@ export default function BasicModal({ modal, close, item }) {
       client_phone_number: form.number,
       service_id: form.id,
     };
-    if (item) {
-      const {amount ,client_id ,id ,service_id ,status }=item
-      // console.log(amount,client_id, id ,service_id ,status);
-      const edit = {
-        amount:+form.amount,
-        client_id,
-        id,
-        service_id,
-        status
-      };
-      try {
-        const response = await order.update(edit);
-        if (response.status === 200) {
-          console.log(response);
-          toggle();
-          window.location.reload();
-        }
-      } catch (error) {}
-    } else {
-      try {
-        const response = await order.create_order(payload);
-        console.log(response);
-        if (response.status == 201) {
-          setSeverity("success");
-          setOpen(true);
-          close();
-          window.location.reload();
-        }
-      } catch (error) {
-        setSeverity("error");
+    try {
+      const response = await order.create_order(payload);
+      console.log(response);
+      if (response.status == 201) {
+        setSeverity("success");
         setOpen(true);
+        close();
+        window.location.reload();
       }
+    } catch (error) {
+      setSeverity("error");
+      setOpen(true);
     }
   };
   const toggle = () => {
