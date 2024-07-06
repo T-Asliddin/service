@@ -9,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState } from "react";
 import { OrderModal } from "@modal";
+import { EditOrderModal } from "@modal";
 import { order } from "@service";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -32,9 +33,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function CustomizedTables({ data }) {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [item, setItem] = useState();
   const [modal ,setModal]=useState(false)
+  const [edit , setEdit] =useState(false)
 
   const daletItem = async (id) => {
     try {
@@ -46,19 +48,19 @@ export default function CustomizedTables({ data }) {
   };
 
   const editItem = (item) => {
-    setModal(true);
-     setItem(item);
+    setEdit(true);
+      setItem(item);
   };
 
   return (
     <>
       <OrderModal
-      item={item}
         modal={modal}
         close={() => {
           setModal(false);
         }}
       />
+       <EditOrderModal edit={edit} closemodal={()=>{setEdit(false)}}    item={item}/>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
