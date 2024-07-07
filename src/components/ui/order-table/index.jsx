@@ -34,10 +34,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function CustomizedTables({ data }) {
   // const [open, setOpen] = useState(false);
-  const [item, setItem] = useState();
   const [modal ,setModal]=useState(false)
   const [edit , setEdit] =useState(false)
-  console.log(data);
 
   const daletItem = async (id) => {
     try {
@@ -48,10 +46,7 @@ export default function CustomizedTables({ data }) {
     }
   };
 
-  const editItem = (item) => {
-    setEdit(true);
-      setItem(item);
-  };
+
 
   return (
     <>
@@ -61,7 +56,7 @@ export default function CustomizedTables({ data }) {
           setModal(false);
         }}
       />
-       <EditOrderModal edit={edit} closemodal={()=>{setEdit(false)}}    item={item}/>
+       <EditOrderModal edit={edit} closemodal={()=>{setEdit(false)}} />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
@@ -99,7 +94,7 @@ export default function CustomizedTables({ data }) {
                   <div>
                     <button
                       onClick={() => {
-                        editItem(item);
+                        setEdit(true);
                       }}
                       class=" mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     >

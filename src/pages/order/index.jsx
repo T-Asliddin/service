@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { OrderModal } from "@modal";
+import { OrderModal  , EditOrderModal} from "@modal";
 import { Button } from "@mui/material";
 import { OrderTable } from "@ui";
  import { order } from "@service";
@@ -30,7 +30,7 @@ const [data ,setData]=useState([])
             Add
           </Button>
         </div>
-     
+     <EditOrderModal data={data}/>
       <OrderTable data={data}/>
       </div>
     </>
