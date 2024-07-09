@@ -5,7 +5,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import App from "../App";
-import { SignIn, SignUp, Asosiy, Order, Servise } from "@pages";
+import { SignIn, SignUp, Asosiy, Order, Servise,Client } from "@pages";
 import { Drawer } from "../components";
 
 const Index = () => {
@@ -18,6 +18,7 @@ const Index = () => {
           <Route index path=" " element={<Asosiy />} />
           <Route path="orders" element={<Order />} />
           <Route path="servise" element={<Servise />} />
+          <Route path="client" element={<Client/>} />
         </Route>
         <Route path="sign-up" element={<SignUp />} />
       </Route>

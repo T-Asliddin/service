@@ -1,3 +1,4 @@
 import ServiceTable from "./service-table"
 import OrderTable from "./order-table"
-export {ServiceTable ,OrderTable}
+import ClientTable from "./client-table"
+export {ServiceTable ,OrderTable ,ClientTable}

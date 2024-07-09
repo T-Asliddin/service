@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
+import Pagination from '@mui/material/Pagination';
 import { CreateModal } from "@modal";
 import { ServiceTable } from "@ui";
 import { service } from "@service";
@@ -8,10 +9,23 @@ import { OrderModal } from "@modal";
 const Index = () => {
   const [open, setOpen] = useState(false);
   const [data ,setData]=useState([])
+  const [count ,setCount]=useState(0)
+  const [params ,setParams]=useState({page:1, limit:6})
+  const handleChange = (event, value) => {
+    setParams({
+      ...params ,
+      page:value
+    })
+  };
+
+
   const getdata = async () => {
     try {
-      const response = await service.get();
+      const response = await service.get(params);
+      // console.log(response.data.total);
       if (response.status===200 && response.data.services) {
+        let total =Math.ceil(response.data.total / params.limit)
+        setCount(total)
         setData(response.data.services)
       }
     } catch (error) {
@@ -21,7 +35,7 @@ const Index = () => {
 
   useEffect(() => {
     getdata();
-  }, []);
+  }, [params]);
 
   return (
     <>
@@ -35,6 +49,7 @@ const Index = () => {
           </Button>
         </div>
         <ServiceTable data={data} />
+        <Pagination count={count} page={params.page} onChange={handleChange} />
       </div>
     </>
   );

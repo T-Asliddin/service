@@ -30,7 +30,7 @@ export default function BasicModal({ edit, closemodal}) {
 const [id,setId]=useState('')
   const get = async () => {
     try {
-      const response = await order.get();
+      const response = await order.getall();
       if (response.status===200 && response.data.orders_list) {
         setData(response.data.orders_list)
       }
@@ -44,7 +44,7 @@ const [id,setId]=useState('')
   }, []);
   const getdata = async () => {
     try {
-      const response = await service.get();
+      const response = await service.getall();
       if (response.status === 200 && response.data.services) {
         setItem(response.data.services);
       }

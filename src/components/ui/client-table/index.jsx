@@ -7,10 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useState } from "react";
-import { service } from "@service";
-import { CreateModal } from "@modal";
-
+import { client } from "@service";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -26,39 +23,38 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
 export default function CustomizedTables({ data }) {
-  const [open, setOpen] = useState(false);
-  const [item ,setItem] =useState()
-  const daletItem = async (id) => {
+
+  const daletItem = async (client_id ,owner_id) => {
+    const params={
+      client_id,
+      owner_id
+    }
     try {
-      const response = await service.delete(id);
+      const response = await client.delete(params);
       response.status === 200 && window.location.reload();
     } catch (error) {
       console.log(error);
     }
   };
 
-  const editItem = (item) => {
-    setOpen(true);
-    setItem(item)
-  };
+
 
   return (
     <>
-      <CreateModal open={open} toggle={() => setOpen(false)}  item={item}/>
+    
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell align="center">T/R</StyledTableCell>
-              <StyledTableCell align="center">Cervice Name</StyledTableCell>
-              <StyledTableCell align="center">Cervice Price</StyledTableCell>
+              <StyledTableCell align="center"> Client Name</StyledTableCell>
+              <StyledTableCell align="center">Client Phone</StyledTableCell>
               <StyledTableCell align="center">Action</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -66,21 +62,18 @@ export default function CustomizedTables({ data }) {
             {data.map((item, index) => (
               <StyledTableRow key={index}>
                 <StyledTableCell align="center">{index + 1}</StyledTableCell>
-                <StyledTableCell align="center">{item.name}</StyledTableCell>
-                <StyledTableCell align="center">{item.price}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {item.full_name}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {item.phone_number}
+                </StyledTableCell>
                 <StyledTableCell align="center">
                   <div>
+            
                     <button
                       onClick={() => {
-                        editItem(item);
-                      }}
-                      class=" mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => {
-                        daletItem(item.id);
+                        daletItem(item.id ,item.owner_id);
                       }}
                       className="bg-red-500 hover:bg-red-700 text-white py-2 px-5 rounded "
                     >
